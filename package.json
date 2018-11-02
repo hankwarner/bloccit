@@ -4,12 +4,23 @@
   "description": "A Reddit-like application for users to discuss and share content",
   "main": "\u001b[C\u001b[C\u001b[C\u001bsrc/server.js)",
   "scripts": {
-    "test": "set NODE_ENV=test && jasmine\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[\u001b[\u001b[3~\u001b[\u001b[3~\u001bt\u001b[C\u001b&\u001b[C\u001b&\u001b[C\u001b[\u001b[C\u001b[C\u001b[F\u001b[C\u001b[B\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[ jasmine"
+    "test": "set NODE_ENV=test && jasmine",
+    "start": "node src/server.js"
   },
   "repository": {
     "type": "git",
     "url": "\u0016https://github.com/hankwarner/bloccit"
   },
   "author": "Hank Warner",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^3.0.0",
+    "request": "^2.83.0"
+  },
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "directories": {
+    "test": "test"
+  }
 }
