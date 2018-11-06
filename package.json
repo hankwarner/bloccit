@@ -4,7 +4,7 @@
   "description": "A Reddit-like application for users to discuss and share content",
   "main": "\u001b[C\u001b[C\u001b[C\u001bsrc/server.js)",
   "scripts": {
-    "test": "set NODE_ENV=test && jasmine",
+    "test": "set NODE_ENV=test&& jasmine",
     "start": "node src/server.js"
   },
   "repository": {
@@ -14,7 +14,7 @@
   "author": "Hank Warner",
   "license": "ISC",
   "devDependencies": {
-    "jasmine": "^3.0.0",
+    "jasmine": "^3.3.0",
     "request": "^2.83.0"
   },
   "dependencies": {
