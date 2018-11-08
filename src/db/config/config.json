@@ -25,6 +25,6 @@
     "dialect": "postgres",
     "logging": false,
     "operatorsAliases": false,
-    "use_env_variable": "postgresql-reticulated-10509"
+    "use_env_variable": "postgres://mnmzwxewracrjg:9f1ae17bc506c8c33ca5464b80cd4ba37f267fc64f3999c5234b89031fb4fb5e@ec2-23-21-192-179.compute-1.amazonaws.com:5432/db21ifoftg272i"
   }
 }
