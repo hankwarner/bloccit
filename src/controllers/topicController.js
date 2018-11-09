@@ -31,6 +31,7 @@ module.exports = {
             if(err || topic == null){
                 res.redirect(404, "/");
             } else {
+                console.log(topic);
                 res.render("topics/show", {topic});
             }
         })
