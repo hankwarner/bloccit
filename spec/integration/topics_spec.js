@@ -1,20 +1,20 @@
 const request = require("request");
 const server = require("../../src/server");
-const base = "http://localhost:3000/topics/";
+const base = "http://localhost:3000/posts/";
 const sequelize = require("../../src/db/models/index").sequelize;
-const Topic = require("../../src/db/models").Topic;
+const post = require("../../src/db/models").post;
 
-describe("routes : topics", () => {
+describe("routes : posts", () => {
     beforeEach((done) => {
-        this.topic;
+        this.post;
         sequelize.sync({force: true}).then((res) => {
   
-         Topic.create({
+         post.create({
            title: "JS Frameworks",
            description: "There is a lot of them"
          })
-          .then((topic) => {
-            this.topic = topic;
+          .then((post) => {
+            this.post = post;
             done();
           })
           .catch((err) => {
@@ -24,29 +24,29 @@ describe("routes : topics", () => {
         });
     });
 
-  describe("GET /topics", () => {
-    it("should return a status code 200 and all topics", (done) => {
+  describe("GET /posts", () => {
+    it("should return a status code 200 and all posts", (done) => {
         request.get(base, (err, res, body) => {
             expect(res.statusCode).toBe(200);
             expect(err).toBeNull();
-            expect(body).toContain("Topics");
+            expect(body).toContain("posts");
             expect(body).toContain("JS Frameworks");
             done();
         })
     })
   })
 
-  describe("GET /topics/new", () => {
-    it("should render a new topic form", (done) => {
+  describe("GET /posts/new", () => {
+    it("should render a new post form", (done) => {
       request.get(`${base}new`, (err, res, body) => {
         expect(err).toBeNull();
-        expect(body).toContain("New Topic");
+        expect(body).toContain("New post");
         done();
       })
     })
   })
 
-  describe("POST /topics/create", () => {
+  describe("POST /posts/create", () => {
     const options = {
       url: `${base}create`,
       form: {
@@ -55,13 +55,13 @@ describe("routes : topics", () => {
       }
     }
 
-    it("should create a new topic and redirect", (done) => {
+    it("should create a new post and redirect", (done) => {
       request.post(options, (err, res, body) => {
-        Topic.findOne({where: {title: "blink-182 songs"}})
-        .then((topic) => {
+        post.findOne({where: {title: "blink-182 songs"}})
+        .then((post) => {
           expect(res.statusCode).toBe(303);
-          expect(topic.title).toBe("blink-182 songs");
-          expect(topic.description).toBe("What's your favorite blink-182 song?");
+          expect(post.title).toBe("blink-182 songs");
+          expect(post.description).toBe("What's your favorite blink-182 song?");
           done();
         })
         .catch((err) => {
@@ -72,9 +72,9 @@ describe("routes : topics", () => {
     })
   })
 
-  describe("GET /topics/:id", () => {
-    it("should render a view with the selected topic", (done) => {
-      request.get(`${base}${this.topic.id}`, (err, res, body) => {
+  describe("GET /posts/:id", () => {
+    it("should render a view with the selected post", (done) => {
+      request.get(`${base}${this.post.id}`, (err, res, body) => {
         expect(err).toBeNull();
         expect(body).toContain("JS Frameworks");
         done();
@@ -82,17 +82,17 @@ describe("routes : topics", () => {
     })
   })
 
-  describe("POST /topics/:id/destroy", () => {
-    it("should delete the topic with the associated ID", (done) => {
-      Topic.all()
-      .then((topics) => {
-        const topicCountBeforeDelete = topics.length;
-        expect(topicCountBeforeDelete).toBe(1);
-        request.post(`${base}${this.topic.id}/destroy`, (err, res, body) => {
-          Topic.all()
-          .then((topics) => {
+  describe("POST /posts/:id/destroy", () => {
+    it("should delete the post with the associated ID", (done) => {
+      post.all()
+      .then((posts) => {
+        const postCountBeforeDelete = posts.length;
+        expect(postCountBeforeDelete).toBe(1);
+        request.post(`${base}${this.post.id}/destroy`, (err, res, body) => {
+          post.all()
+          .then((posts) => {
             expect(err).toBeNull();
-            expect(topics.length).toBe(topicCountBeforeDelete - 1);
+            expect(posts.length).toBe(postCountBeforeDelete - 1);
             done();
           })
         })
@@ -100,21 +100,21 @@ describe("routes : topics", () => {
     })
   })
 
-  describe("GET /topics/:id/edit", () => {
-    it("should render a view with an edit topic form", (done) => {
-      request.get(`${base}${this.topic.id}/edit`, (err, res, body) => {
+  describe("GET /posts/:id/edit", () => {
+    it("should render a view with an edit post form", (done) => {
+      request.get(`${base}${this.post.id}/edit`, (err, res, body) => {
         expect(err).toBeNull();
-        expect(body).toContain("Edit Topic");
+        expect(body).toContain("Edit post");
         expect(body).toContain("JS Frameworks");
         done();
       })
     })
   })
 
-  describe("POST /topics/:id/update", () => {
-    it("should update the topic with the given values", (done) => {
+  describe("POST /posts/:id/update", () => {
+    it("should update the post with the given values", (done) => {
        const options = {
-          url: `${base}${this.topic.id}/update`,
+          url: `${base}${this.post.id}/update`,
           form: {
             title: "JavaScript Frameworks",
             description: "There are a lot of them"
@@ -124,11 +124,11 @@ describe("routes : topics", () => {
           (err, res, body) => {
 
           expect(err).toBeNull();
-          Topic.findOne({
-            where: { id: this.topic.id }
+          post.findOne({
+            where: { id: this.post.id }
           })
-          .then((topic) => {
-            expect(topic.title).toBe("JavaScript Frameworks");
+          .then((post) => {
+            expect(post.title).toBe("JavaScript Frameworks");
             done();
           })
         })

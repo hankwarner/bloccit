@@ -1,5 +1,6 @@
 const Post = require("./models").Post;
 const Topic = require("./models").Topic;
+const Tag = require("./models").Tag
 
 module.exports = {
     addPost(newPost, callback){
@@ -13,7 +14,12 @@ module.exports = {
     },
 
     getPost(id, callback){
-        return Post.findById(id)
+        return Post.findById(id, {
+          include: [{
+            model: Tag,
+            as: "tags"
+          }]
+        })
         .then((post) => {
           callback(null, post);
         })

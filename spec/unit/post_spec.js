@@ -1,25 +1,25 @@
 const sequelize = require("../../src/db/models/index").sequelize;
-const Topic = require("../../src/db/models").Topic;
+const post = require("../../src/db/models").post;
 const Post = require("../../src/db/models").Post;
 
 describe("Post", () => {
 
   beforeEach((done) => {
-    this.topic;
+    this.post;
     this.post;
     sequelize.sync({force: true}).then((res) => {
 
-      Topic.create({
+      post.create({
         title: "Expeditions to Alpha Centauri",
         description: "A compilation of reports from recent visits to the star system."
       })
-      .then((topic) => {
-        this.topic = topic;
+      .then((post) => {
+        this.post = post;
 
         Post.create({
           title: "My first visit to Proxima Centauri b",
           body: "I saw some rocks.",
-          topicId: this.topic.id
+          postId: this.post.id
         })
         .then((post) => {
           this.post = post;
@@ -34,11 +34,11 @@ describe("Post", () => {
   })
 
   describe("#create()", () => {
-    it("should create a post object with a title, body, and assigned topic", (done) => {
+    it("should create a post object with a title, body, and assigned post", (done) => {
       Post.create({
         title: "Pros of Cryosleep during the long journey",
         body: "1. Not having to answer the 'are we there yet?' question.",
-        topicId: this.topic.id
+        postId: this.post.id
       })
       .then((post) => {
         expect(post.title).toBe("Pros of Cryosleep during the long journey");
@@ -51,7 +51,7 @@ describe("Post", () => {
       })
     })
 
-    it("should not create a post with missing title, body, or assigned topic", (done) => {
+    it("should not create a post with missing title, body, or assigned post", (done) => {
         Post.create({
           title: "Pros of Cryosleep during the long journey"
         })
@@ -60,34 +60,34 @@ describe("Post", () => {
         })
         .catch((err) => {
           expect(err.message).toContain("Post.body cannot be null");
-          expect(err.message).toContain("Post.topicId cannot be null");
+          expect(err.message).toContain("Post.postId cannot be null");
           done();
         })
     })
   })
 
-  describe("#setTopic()", () => {
-    it("should associate a topic and a post together", (done) => {
-      Topic.create({
+  describe("#setpost()", () => {
+    it("should associate a post and a post together", (done) => {
+      post.create({
         title: "Challenges of interstellar travel",
         description: "1. The Wi-Fi is terrible"
       })
-      .then((newTopic) => {
-        expect(this.post.topicId).toBe(this.topic.id);
-        this.post.setTopic(newTopic)
+      .then((newpost) => {
+        expect(this.post.postId).toBe(this.post.id);
+        this.post.setpost(newpost)
         .then((post) => {
-          expect(post.topicId).toBe(newTopic.id);
+          expect(post.postId).toBe(newpost.id);
           done();
         })
       })
     })
   })
 
-  describe("#getTopic()", () => {
-    it("should return the associated topic", (done) => {
-      this.post.getTopic()
-      .then((associatedTopic) => {
-        expect(associatedTopic.title).toBe("Expeditions to Alpha Centauri");
+  describe("#getpost()", () => {
+    it("should return the associated post", (done) => {
+      this.post.getpost()
+      .then((associatedpost) => {
+        expect(associatedpost.title).toBe("Expeditions to Alpha Centauri");
         done();
       })
     })
