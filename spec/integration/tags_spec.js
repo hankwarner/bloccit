@@ -58,4 +58,34 @@ describe("routes : tags", () => {
     })
   })
 
+  describe("POST /topics/:topicId/posts/create", () => {
+
+    it("should create a new tag and redirect", (done) => {
+       const options = {
+         url: `${base}/${this.topic.id}/posts/${this.post.id}/create`,
+         form: {
+           name: "exciting",
+           color: "red",
+           postId: this.post.id
+         }
+       };
+       request.post(options,
+         (err, res, body) => {
+           Tag.findOne({where: {name: "exciting"}})
+           .then((tag) => {
+             expect(tag).not.toBeNull();
+             expect(tag.name).toBe("exciting");
+             expect(tag.color).toBe("red");
+             expect(tag.postId).not.toBeNull();
+             done();
+           })
+           .catch((err) => {
+             console.log(err);
+             done();
+           })
+         }
+       )
+     })
+  })
+
 })

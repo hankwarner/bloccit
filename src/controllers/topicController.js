@@ -3,6 +3,7 @@ const topicQueries = require("../db/queries.topics.js");
 module.exports = {
     index(req, res, next) {
         topicQueries.getAllTopics((err, topics) => {
+            console.log(err);
             if(err){                
                 res.redirect(500, "static/index");
             } else {
