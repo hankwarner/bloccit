@@ -97,4 +97,29 @@ describe("routes : tags", () => {
     })
   })
 
+  describe("POST /topics/:topicId/posts/:postId/tags/:id/destroy", () => {
+    it("should delete the tag with the associated ID", (done) => {
+      expect(this.tag.id).toBe(1);
+      request.post(`${base}/${this.topic.id}/posts/${this.post.id}/tags/${this.tag.id}/destroy`, (err, res, body) => {
+        Tag.findById(1)
+        .then((tag) => {
+          expect(err).toBeNull();
+          expect(tag).toBeNull();
+          done();
+        })
+      })
+    })
+  })
+
+  describe("GET /topics/:topicId/posts/:postId/tags/:id/edit", () => {
+    it("should render a view with an edit tag form", (done) => {
+      request.get(`${base}/${this.topic.id}/posts/${this.post.id}/tags/${this.tag.id}/edit`, (err, res, body) => {
+        expect(err).toBeNull();
+        expect(body).toContain("Edit Tag");
+        expect(body).toContain("cool");
+        done();
+      })
+    })
+  })
+
 })

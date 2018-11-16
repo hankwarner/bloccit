@@ -21,5 +21,17 @@ module.exports = {
       .catch((err) => {
         callback(err);
       })
+    },
+
+    deleteTag(id, callback){
+      return Tag.destroy({
+        where: { id }
+      })
+      .then((deletedRecordsCount) => {
+        callback(null, deletedRecordsCount);
+      })
+      .catch((err) => {
+        callback(err);
+      })
     }
 }
