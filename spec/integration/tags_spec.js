@@ -34,7 +34,7 @@ describe("routes : tags", () => {
               name: "cool",
               color: "blue",
               postId: this.post.id,
-              topicId: this.topic.id
+              topicId: this.post.topicId
           })
           .then((tag) => {
               this.tag = tag;
@@ -66,7 +66,8 @@ describe("routes : tags", () => {
          form: {
            name: "cool",
            color: "blue",
-           postId: this.post.id
+           postId: this.post.id,
+           topicId: this.post.topicId
          }
        };
        request.post(options,
