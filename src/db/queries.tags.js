@@ -11,5 +11,15 @@ module.exports = {
         .catch((err) => {
           callback(err);
         })
+    },
+
+    getTag(id, callback){
+      return Tag.findById(id)
+      .then((tag) => {
+        callback(null, tag);
+      })
+      .catch((err) => {
+        callback(err);
+      })
     }
 }

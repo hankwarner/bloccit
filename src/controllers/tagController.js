@@ -15,12 +15,21 @@ module.exports = {
           postId: req.params.postId
         };
         tagQueries.addTag(newTag, (err, post) => {
-            console.log(req.params.topicId);
             if(err){
                 res.redirect(500, "/tags/new");
             } else {
-                res.redirect(303, `/topics/${req.params.topicId}/posts/${newTag.postid}`);
+                res.redirect(303, `/topics/${req.params.topicId}/posts/${newTag.postId}`);
             }
-        });
+        })
+    },
+
+    show(req, res, next){
+        tagQueries.getTag(req.params.id, (err, post) => {
+          if(err || tag == null){
+            res.redirect(404, "/");
+          } else {
+            res.render("tags/show", {tag});
+          }
+        })
     }
 }

@@ -58,24 +58,23 @@ describe("routes : tags", () => {
     })
   })
 
-  describe("POST /topics/:topicId/posts/create", () => {
-
+  describe("POST /topics/:topicId/posts/:postId/create", () => {
     it("should create a new tag and redirect", (done) => {
        const options = {
          url: `${base}/${this.topic.id}/posts/${this.post.id}/create`,
          form: {
-           name: "exciting",
-           color: "red",
+           name: "cool",
+           color: "blue",
            postId: this.post.id
          }
        };
        request.post(options,
          (err, res, body) => {
-           Tag.findOne({where: {name: "exciting"}})
+           Tag.findOne({where: {name: "cool"}})
            .then((tag) => {
              expect(tag).not.toBeNull();
-             expect(tag.name).toBe("exciting");
-             expect(tag.color).toBe("red");
+             expect(tag.name).toBe("cool");
+             expect(tag.color).toBe("blue");
              expect(tag.postId).not.toBeNull();
              done();
            })
@@ -86,6 +85,16 @@ describe("routes : tags", () => {
          }
        )
      })
+  })
+
+  describe("GET /topics/:topicId/posts/:postId/tags/:id", () => {
+    it("should render a view with the selected tag", (done) => {
+      request.get(`${base}/${this.topic.id}/posts/${this.post.id}/tags/${this.tag.id}`, (err, res, body) => {
+        expect(err).toBeNull();
+        expect(body).toContain("cool");
+        done();
+      })
+    })
   })
 
 })
