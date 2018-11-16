@@ -1,4 +1,5 @@
 const tagQueries = require("../db/queries.tags.js");
+const postQueries = require("../db/queries.posts.js");
 
 module.exports = {
     new(req, res, next){
@@ -12,9 +13,11 @@ module.exports = {
         let newTag = {
           name: req.body.name,
           color: req.body.color,
-          postId: req.params.postId
+          postId: req.params.postId,
+          topicId: req.params.topicId
         };
-        tagQueries.addTag(newTag, (err, post) => {
+        tagQueries.addTag(newTag, (err, tag) => {
+            console.log(err);
             if(err){
                 res.redirect(500, "/tags/new");
             } else {

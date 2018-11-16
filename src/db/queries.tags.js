@@ -13,7 +13,7 @@ module.exports = {
         })
     },
 
-    getTag(id, callback){
+    getTag(id, callback){      
       return Tag.findById(id)
       .then((tag) => {
         callback(null, tag);

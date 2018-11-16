@@ -18,9 +18,9 @@
       <ul class="list-group">
         <% post.tags.forEach((tag) => { %>
           <li class="list-group-item">
-            <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/tags/<%= tag.id %>"> <%= tag.name %> </a>
-            <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/tags/<%= tag.id %>/edit" class="btn btn-warning">Edit</a>
-            <form style="display:initial" action="/topics/<%= post.topicId %>/posts/<%= post.id %>/tags/<%= tag.id %>/destroy" method="post">
+            <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/tags/<%= tag.id %>" style="color: <%= tag.color %>"> <%= tag.name %> </a>
+            <a href="/topics/<%= post.topicId %>/posts/<%= tag.postId %>/tags/<%= tag.id %>/edit" class="btn btn-warning">Edit</a>
+            <form style="display:initial" action="/topics/<%= post.topicId %>/posts/<%= tag.postId %>/tags/<%= tag.id %>/destroy" method="post">
               <button type="submit" class="btn btn-danger">Delete</button>
             </form>
           </li>

@@ -7,10 +7,8 @@
     <% include ../static/partials/navbar.ejs %>
 
     <main class="container">
-
       <h1>Edit Tag</h1>
-
-      <form action="/topics/<%= topicId %>/posts/<%= postId %>/tags/<%= tag.id %>/update" method="post">
+      <form action="/topics/<%= tag.topicId %>/posts/<%= tag.postId %>/tags/<%= tag.id %>/update" method="post">
         <div class="form-group">
           <label for="title">Tag name</label>
           <input value="<%= tag.name %>" type="text" class="form-control" name="name" aria-describedby="titleHelp" placeholder="Enter Tag Name">
