@@ -33,7 +33,8 @@ describe("routes : tags", () => {
           Tag.create({
               name: "cool",
               color: "blue",
-              postId: this.post.id
+              postId: this.post.id,
+              topicId: this.topic.id
           })
           .then((tag) => {
               this.tag = tag;

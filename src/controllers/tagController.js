@@ -54,5 +54,15 @@ module.exports = {
             res.render("tags/edit", {tag});
           }
         });
-    }
+    },
+
+    update(req, res, next){
+        tagQueries.updateTag(req.params.id, req.body, (err, post) => {
+            if(err || post == null){
+            res.redirect(404, `/topics/${req.params.topicId}/posts/${req.params.id}/edit`);
+          } else {
+            res.redirect(`/topics/${req.params.topicId}/posts/${req.params.postId}`);
+          }
+        });
+      }
 }

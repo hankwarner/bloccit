@@ -33,5 +33,24 @@ module.exports = {
       .catch((err) => {
         callback(err);
       })
+    },
+
+    updateTag(id, updatedTag, callback){
+      return Tag.findById(id)
+      .then((tag) => {
+        if(!tag){
+          return callback("Tag not found");
+        }
+ 
+        tag.update(updatedTag, {
+          fields: Object.keys(updatedTag)
+        })
+        .then(() => {
+          callback(null, tag);
+        })
+        .catch((err) => {
+          callback(err);
+        })
+      })
     }
 }
