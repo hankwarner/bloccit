@@ -47,7 +47,8 @@ describe("Tag", () => {
       Tag.create({
         name: "creative",
         color: "orange",
-        postId: this.post.id
+        postId: this.post.id,
+        topicId: this.post.topicId
       })
       .then((tag) => {
         expect(tag.name).toBe("creative");
