@@ -1,25 +1,25 @@
 const sequelize = require("../../src/db/models/index").sequelize;
-const post = require("../../src/db/models").post;
+const Topic = require("../../src/db/models").Topic;
 const Post = require("../../src/db/models").Post;
 
 describe("Post", () => {
 
   beforeEach((done) => {
-    this.post;
+    this.topic;
     this.post;
     sequelize.sync({force: true}).then((res) => {
 
-      post.create({
+      Topic.create({
         title: "Expeditions to Alpha Centauri",
         description: "A compilation of reports from recent visits to the star system."
       })
-      .then((post) => {
-        this.post = post;
+      .then((topic) => {
+        this.topic = topic;
 
         Post.create({
           title: "My first visit to Proxima Centauri b",
           body: "I saw some rocks.",
-          postId: this.post.id
+          topicId: this.topic.id
         })
         .then((post) => {
           this.post = post;
@@ -38,7 +38,7 @@ describe("Post", () => {
       Post.create({
         title: "Pros of Cryosleep during the long journey",
         body: "1. Not having to answer the 'are we there yet?' question.",
-        postId: this.post.id
+        topicId: this.topic.id
       })
       .then((post) => {
         expect(post.title).toBe("Pros of Cryosleep during the long journey");
@@ -60,34 +60,34 @@ describe("Post", () => {
         })
         .catch((err) => {
           expect(err.message).toContain("Post.body cannot be null");
-          expect(err.message).toContain("Post.postId cannot be null");
+          expect(err.message).toContain("Post.topicId cannot be null");
           done();
         })
     })
   })
 
-  describe("#setpost()", () => {
-    it("should associate a post and a post together", (done) => {
-      post.create({
+  describe("#setTopic()", () => {
+    it("should associate a topic and a post together", (done) => {
+      Topic.create({
         title: "Challenges of interstellar travel",
         description: "1. The Wi-Fi is terrible"
       })
-      .then((newpost) => {
-        expect(this.post.postId).toBe(this.post.id);
-        this.post.setpost(newpost)
+      .then((newTopic) => {
+        expect(this.post.topicId).toBe(this.topic.id);
+        this.post.setTopic(newTopic)
         .then((post) => {
-          expect(post.postId).toBe(newpost.id);
+          expect(post.topicId).toBe(newTopic.id);
           done();
         })
       })
     })
   })
 
-  describe("#getpost()", () => {
-    it("should return the associated post", (done) => {
-      this.post.getpost()
-      .then((associatedpost) => {
-        expect(associatedpost.title).toBe("Expeditions to Alpha Centauri");
+  describe("#getTopic()", () => {
+    it("should return the associated topic", (done) => {
+      this.post.getTopic()
+      .then((associatedTopic) => {
+        expect(associatedTopic.title).toBe("Expeditions to Alpha Centauri");
         done();
       })
     })

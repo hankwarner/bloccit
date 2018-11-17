@@ -17,6 +17,7 @@ describe("Tag", () => {
       })
       .then((topic) => {
         this.topic = topic;
+
         Post.create({
           title: "My first visit to Proxima Centauri b",
           body: "I saw some rocks.",
@@ -24,10 +25,12 @@ describe("Tag", () => {
         })
         .then((post) => {
           this.post = post;
+
           Tag.create({
               name: "lame",
               color: "green",
-              postId: this.post.id
+              postId: this.post.id,
+              topicId: this.post.topicId
           })
           .then((tag) => {
               this.tag = tag;
