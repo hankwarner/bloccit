@@ -13,6 +13,7 @@ describe("routes : tags", () => {
     this.topic;
     this.post;
     this.tag;
+    this.user;
 
     sequelize.sync({force: true}).then((res) => {
       Topic.create({
@@ -25,7 +26,8 @@ describe("routes : tags", () => {
         Post.create({
           title: "Snowball Fighting",
           body: "So much snow!",
-          topicId: this.topic.id
+          topicId: this.topic.id,
+          userId: this.user.id
         })
         .then((post) => {
           this.post = post;
