@@ -9,6 +9,7 @@ const User = require("../../src/db/models").User;
 describe("routes : topics", () => {
   beforeEach((done) => {
     this.topic;
+    
     sequelize.sync({force: true}).then((res) => {
       Topic.create({
         title: "JS Frameworks",

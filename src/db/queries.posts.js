@@ -1,6 +1,7 @@
 const Post = require("./models").Post;
 const Topic = require("./models").Topic;
 const Tag = require("./models").Tag
+const Authorizer = require("../policies/topic");
 
 module.exports = {
     addPost(newPost, callback){

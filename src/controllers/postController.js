@@ -15,24 +15,24 @@ module.exports = {
 
   create(req, res, next){
     const authorized = new Authorizer(req.user).create();
-   
+
     if(authorized) {
       let newPost = {
         title: req.body.title,
         body: req.body.body,
-        topicId: req.body.topicId,
-        userId: req.body.userId
+        topicId: req.params.topicId,
+        userId: req.user.id
       };
       postQueries.addPost(newPost, (err, post) => {
         if(err){
-          res.redirect(500, `/topics/${topic.id}/posts/new`);
+          res.redirect(500, `/posts/new`);
         } else {
-          res.redirect(303, `/topics/${topic.id}/posts/${post.id}`);
+          res.redirect(303, `/topics/${newPost.topicId}/posts/${post.id}`);
         }
       });
     } else {
       req.flash("notice", "You are not authorized to do that.");
-      res.redirect(`/topics/${topic.id}`);
+      res.redirect(`/topics/${post.topicId}`);
       }
     },
 
