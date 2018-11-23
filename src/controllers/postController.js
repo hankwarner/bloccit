@@ -47,13 +47,13 @@ module.exports = {
     },
 
     destroy(req, res, next){
-      postQueries.deletePost(req, (err, post) => {
+      postQueries.deletePost(req, (err, deletedRecordsCount) => {
         if(err){
-          res.redirect(err, `/topics/${req.params.topicId}`)
+          res.redirect(500, `/topics/${req.params.topicId}/posts/${req.params.id}`)
         } else {
           res.redirect(303, `/topics/${req.params.topicId}`)
         }
-      });
+      })
     },
 
     edit(req, res, next){
@@ -64,10 +64,10 @@ module.exports = {
           const authorized = new Authorizer(req.user, post).edit();
           
           if(authorized){
-            res.render(`topics/${req.params.topicId}/posts/${req.params.postId}/edit`, {post});
+            res.render(`posts/edit`, {post});
           } else {
-            req.flash("You are not authorized to do that.")
-            res.redirect(`/topics/${req.params.topicId}/posts/${req.params.postId}`)
+            req.flash("You are not authorized to do that.");
+            res.redirect("/");
           }
         }
       });
