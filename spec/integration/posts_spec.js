@@ -44,6 +44,18 @@ describe("routes : posts", () => {
     })
   })
 
+  describe("guest users viewing Post", () => {
+    describe("GET /topics/:topicId/posts", () => {
+      it("should show all posts", (done) => {
+        request.get(`${base}/${this.topic.id}`, (err, res, body) => {
+          expect(err).toBeNull();
+          expect(body).toContain("Snowball Fighting");
+          done();
+        })
+      })
+    })
+  })
+
   describe("admin user performing CRUD actions for Post", () => {
     beforeEach((done) => {
       User.create({

@@ -1,7 +1,7 @@
 const Post = require("./models").Post;
 const Topic = require("./models").Topic;
 const Tag = require("./models").Tag
-const Authorizer = require("../policies/topic");
+const Authorizer = require("../policies/post");
 
 module.exports = {
     addPost(newPost, callback){
@@ -33,7 +33,7 @@ module.exports = {
       return Post.findById(req.params.id)
       .then((post) => {
         const authorized = new Authorizer(req.user, post).destroy();
-        
+        console.log(authorized);
         if(authorized) {
           post.destroy()
           .then((res) => {
