@@ -1,6 +1,9 @@
 const Post = require("./models").Post;
 const Topic = require("./models").Topic;
 const Tag = require("./models").Tag
+const Comment = require("./models").Comment;
+const User = require("./models").User;
+
 const Authorizer = require("../policies/post");
 
 module.exports = {
@@ -19,6 +22,11 @@ module.exports = {
           include: [{
             model: Tag,
             as: "tags"
+          }],
+          include: [{
+            model: Comment, as: "comments", include: [
+              {model: User}
+            ]
           }]
         })
         .then((post) => {

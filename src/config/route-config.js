@@ -3,8 +3,8 @@ module.exports = {
         const staticRoutes = require('../routes/static');
         const topicRoutes = require("../routes/topics");
         const postRoutes = require("../routes/posts");
-        const tagRoutes = require("../routes/tags");
         const userRoutes = require("../routes/users");
+        const commentRoutes = require("../routes/comments");
 
         if(process.env.NODE_ENV === "test") {
             const mockAuth = require("../../spec/support/mock-auth.js");
@@ -14,7 +14,7 @@ module.exports = {
         app.use(staticRoutes);
         app.use(topicRoutes);
         app.use(postRoutes);
-        app.use(tagRoutes);
         app.use(userRoutes);
+        app.use(commentRoutes);
     }
 }

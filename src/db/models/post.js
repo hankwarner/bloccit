@@ -24,15 +24,15 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "CASCADE"
     });
 
-    Post.hasMany(models.Tag, {
-      foreignKey: "postId",
-      as: "tags"
-    });
-
     Post.belongsTo(models.User, {
       foreignKey: "userId",
       onDelete: "CASCADE"
     });
+
+    Post.hasMany(models.Comment, {
+      foreignKey: "postId",
+      as: "comments"
+    });
   }
   return Post;
-};
+}

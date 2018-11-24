@@ -17,20 +17,21 @@
       <% } %>
       <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/tags/new" class="btn btn-success">New Tag</a>
       <p><%= post.body %></p>
-      <h4>Tags</h4>
-      <ul class="list-group">
-        <% post.tags.forEach((tag) => { %>
-          <li class="list-group-item">
-            <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/tags/<%= tag.id %>" style="color: <%= tag.color %>"> <%= tag.name %> </a>
-            <% if(currentUser.isAdmin() || currentUser.isOwner()) { %>
-              <a href="/topics/<%= post.topicId %>/posts/<%= tag.postId %>/tags/<%= tag.id %>/edit" class="btn btn-warning">Edit</a>
-              <form style="display:initial" action="/topics/<%= post.topicId %>/posts/<%= tag.postId %>/tags/<%= tag.id %>/destroy" method="post">
-                <button type="submit" class="btn btn-danger">Delete</button>
-              </form>
-            <% } %>
-          </li>
-        <% }) %>
-      </ul>
+
+      <section id="comment-form">
+        <% if(currentUser) { %>
+          <% include ../comments/new.ejs %>
+        <% } %>
+      </section>
+
+      <section id="comment-list">
+        <% if(post.comments) { %>
+          <% post.comments.forEach((comment) => { %>
+            <%- include("../comments/show.ejs", {comment}) %>
+          <% }) %>
+        <% } %>
+      </section>
+
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>
