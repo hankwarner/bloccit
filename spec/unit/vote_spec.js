@@ -144,28 +144,28 @@ describe("Vote", () => {
          })
        })
   
-       describe("#getUser()", () => {
-         it("should return the associated user", (done) => {
-           Vote.create({
-             value: 1,
-             userId: this.user.id,
-             postId: this.post.id
-           })
-           .then((vote) => {
-             vote.getUser()
-             .then((user) => {
-               expect(user.id).toBe(this.user.id);
-               done();
-             })
-           })
-           .catch((err) => {
-             console.log(err);
-             done();
-           })
-         })
-       })
+      describe("#getUser()", () => {
+        it("should return the associated user", (done) => {
+          Vote.create({
+            value: 1,
+            userId: this.user.id,
+            postId: this.post.id
+          })
+          .then((vote) => {
+            vote.getUser()
+            .then((user) => {
+              expect(user.id).toBe(this.user.id);
+              done();
+            })
+          })
+          .catch((err) => {
+            console.log(err);
+            done();
+          })
+        })
+      })
 
-       describe("#setPost()", () => {
+      describe("#setPost()", () => {
         it("should associate a post and a vote together", (done) => {
           Vote.create({
             value: -1,
@@ -219,4 +219,34 @@ describe("Vote", () => {
         })
       })
 
+      describe("#getPoints()", () => {
+        it("should return the vote total for a post", (done) => {
+          Vote.create({
+            value: 1,
+            userId: this.user.id,
+            postId: this.post.id
+          })
+          .then((firstVote) => {
+            User.create({
+              email: "megaman@capcom.com",
+              password: "pewpewpew"
+            })
+            .then((newUser) => {
+              Vote.create({
+                value: 1,
+                userId: newUser.id,
+                postId: this.post.id
+              })
+              .then((secondVote) => {
+                expect(this.post.getPoints()).toBe(2);
+                done();
+              })
+            })
+          })
+          .catch((err) => {
+            console.log(err);
+            done();
+          })
+        })
+      })
 })

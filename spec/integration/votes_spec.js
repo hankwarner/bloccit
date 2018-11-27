@@ -165,6 +165,94 @@ describe("routes : votes", () => {
       })
     })
 
-  })
+    describe("a vote with a value of anything other than 1 or -1 should not be created", () => {
+        it("should not create a vote", (done) => {
+            Vote.create({
+                value: 2,
+                postId: this.post.id,
+                userId: this.user.id
+              })
+            .then((vote) => {
+                const options = {
+                    url: `${base}${this.topic.id}/posts/${this.post.id}/votes/upvote`
+                }
+    
+                request.get(options,
+                    (err, res, body) => {
+                        Vote.findOne({      
+                            where: {
+                            userId: this.user.id,
+                            postId: this.post.id
+                            }
+                        })
+                        .then((vote) => {
+                            expect(vote).toBeNull();
+                            done();
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                            done();
+                        })
+                    }
+                )
+            })
+            .catch((err) => {
+                console.log(err);
+                done();
+            })
+        })
+      })
 
-});
+      describe("more than one vote per user for a given post", () => {
+        it("should not create a vote", (done) => {
+            User.create({
+                email: "megaman@capcom.com",
+                password: "pewpewpew"
+            })
+            .then((newUser) => {
+                Vote.create({
+                    value: 1,
+                    postId: this.post.id,
+                    userId: newUser.id
+                  })
+                .then((firstVote) => {
+                    Vote.create({
+                        value: 1,
+                        postId: this.post.id,
+                        userId: newUser.id
+                      })
+                    .then((secondVote) => {
+                        
+                        const options = {
+                            url: `${base}${this.topic.id}/posts/${this.post.id}/votes/upvote`
+                        }
+            
+                        request.get(options,
+                            (err, res, body) => {
+                                Vote.findOne({      
+                                    where: {
+                                    userId: newUser.id,
+                                    postId: this.post.id
+                                    }
+                                })
+                                .then((vote) => {
+                                    expect(vote.value).toBe(1);
+                                    done();
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                    done();
+                                })
+                            }
+                        )
+                    })
+                })
+                .catch((err) => {
+                    console.log(err);
+                    done();
+                })
+            })
+        })
+      })
+  })
+})
