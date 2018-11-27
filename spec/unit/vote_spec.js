@@ -218,35 +218,4 @@ describe("Vote", () => {
           })
         })
       })
-
-      describe("#getPoints()", () => {
-        it("should return the vote total for a post", (done) => {
-          Vote.create({
-            value: 1,
-            userId: this.user.id,
-            postId: this.post.id
-          })
-          .then((firstVote) => {
-            User.create({
-              email: "megaman@capcom.com",
-              password: "pewpewpew"
-            })
-            .then((newUser) => {
-              Vote.create({
-                value: 1,
-                userId: newUser.id,
-                postId: this.post.id
-              })
-              .then((secondVote) => {
-                expect(this.post.getPoints()).toBe(2);
-                done();
-              })
-            })
-          })
-          .catch((err) => {
-            console.log(err);
-            done();
-          })
-        })
-      })
 })
