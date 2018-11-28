@@ -305,7 +305,7 @@ describe("routes : posts", () => {
         })
       })
     })
-//fail
+
     describe("POST /topics/:topicId/posts/:id/destroy", () => {
       it("should delete the post with the associated ID", (done) => {
         expect(this.post.id).toBe(1);
@@ -329,7 +329,7 @@ describe("routes : posts", () => {
         })
       })
     })
-//fail
+
     describe("POST /topics/:topicId/posts/:id/update", () => {
       it("should return a status code 302", (done) => {
         request.post({

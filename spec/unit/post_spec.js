@@ -9,7 +9,6 @@ describe("Post", () => {
     this.topic;
     this.post;
     this.user;
-    this.vote;
 
     sequelize.sync({force: true}).then((res) => {
       User.create({
@@ -22,21 +21,20 @@ describe("Post", () => {
         Topic.create({
           title: "Expeditions to Alpha Centauri",
           description: "A compilation of reports from recent visits to the star system.",
-          posts: [{
-            title: "My first visit to Proxima Centauri b",
-            body: "I saw some rocks.",
-            userId: this.user.id
-          }]
-        }, {
-          include: {
-            model: Post,
-            as: "posts"
-          }
         })
         .then((topic) => {
           this.topic = topic;
-          this.post = topic.posts[0];
-          done();
+
+          Post.create({
+            title: "Lorem Ipsum",
+            body: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit",
+            topicId: this.topic.id,
+            userId: this.user.id
+          })
+          .then((post) => {
+            this.post = post;
+            done();
+          })
         })
       })
     })
@@ -134,31 +132,15 @@ describe("Post", () => {
 
   describe("#getPoints()", () => {
     it("should return the vote total for a post", (done) => {
-      console.log(this.post.id);
-      Vote.create({
-        value: 1,
-        userId: this.user.id,
-        postId: this.post.id
-      })
-      .then((firstVote) => {
-        User.create({
-          email: "megaman@capcom.com",
-          password: "pewpewpew"
+        Vote.create({
+          value: 1,
+          userId: this.user.id,
+          postId: this.post.id
         })
-        .then((newUser) => {
-          console.log(this.post.id);
-          Vote.create({
-            value: 1,
-            userId: newUser.id,
-            postId: this.post.id
-          })
-          .then((secondVote) => {
-            console.log(this.post);
-            expect(this.post.getPoints()).toBe(2);
-            done();
-          })
+        .then((vote) => {
+          expect(this.post.getPoints()).toBe(1);
+          done();
         })
-      })
       .catch((err) => {
         console.log(err);
         done();
