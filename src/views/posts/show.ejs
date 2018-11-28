@@ -23,6 +23,9 @@
         </form>
       <% } %>
       <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/tags/new" class="btn btn-success">New Tag</a>
+      <% if(currentUser) { %>
+        <% include ../favorites/favoriting.ejs %>
+      <% } %>
       <p><%= post.body %></p>
 
       <section id="comment-form">
