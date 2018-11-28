@@ -40,11 +40,18 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Post.prototype.getPoints = function(){
+      console.log(this.post.votes);
       if(this.votes.length === 0) return 0
       return this.votes
         .map((v) => { return v.value })
         .reduce((prev, next) => { return prev + next });
-      }
+    }
+//call this method on a Post object with userId as an argument. 
+//It returns true if the user with the matching userId has an upvote for the post. 
+    Post.prototype.hasUpvoteFor = function(userId){
+      //this.votes.filter by userId...if length > 1
+
+    }
   }
   return Post;
 }

@@ -5,7 +5,6 @@ const User = require("../../src/db/models").User;
 const Vote = require("../../src/db/models").Vote;
 
 describe("Post", () => {
-
   beforeEach((done) => {
     this.topic;
     this.post;
@@ -135,6 +134,7 @@ describe("Post", () => {
 
   describe("#getPoints()", () => {
     it("should return the vote total for a post", (done) => {
+      console.log(this.post.id);
       Vote.create({
         value: 1,
         userId: this.user.id,
@@ -146,12 +146,14 @@ describe("Post", () => {
           password: "pewpewpew"
         })
         .then((newUser) => {
+          console.log(this.post.id);
           Vote.create({
             value: 1,
             userId: newUser.id,
             postId: this.post.id
           })
           .then((secondVote) => {
+            console.log(this.post);
             expect(this.post.getPoints()).toBe(2);
             done();
           })

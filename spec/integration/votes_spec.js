@@ -166,42 +166,42 @@ describe("routes : votes", () => {
     })
 
     describe("a vote with a value of anything other than 1 or -1 should not be created", () => {
-        it("should not create a vote", (done) => {
-            Vote.create({
-                value: 2,
-                postId: this.post.id,
-                userId: this.user.id
-              })
-            .then((vote) => {
-                const options = {
-                    url: `${base}${this.topic.id}/posts/${this.post.id}/votes/upvote`
+      it("should not create a vote", (done) => {
+        Vote.create({
+            value: 2,
+            postId: this.post.id,
+            userId: this.user.id
+          })
+        .then((vote) => {
+          const options = {
+              url: `${base}${this.topic.id}/posts/${this.post.id}/votes/upvote`
+          }
+
+          request.get(options,
+            (err, res, body) => {
+              Vote.findOne({      
+                where: {
+                userId: this.user.id,
+                postId: this.post.id
                 }
-    
-                request.get(options,
-                    (err, res, body) => {
-                        Vote.findOne({      
-                            where: {
-                            userId: this.user.id,
-                            postId: this.post.id
-                            }
-                        })
-                        .then((vote) => {
-                            expect(vote).toBeNull();
-                            done();
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                            done();
-                        })
-                    }
-                )
-            })
-            .catch((err) => {
-                console.log(err);
+              })
+              .then((vote) => {
+                expect(vote).toBeNull();
                 done();
-            })
+              })
+              .catch((err) => {
+                  console.log(err);
+                  done();
+              })
+            }
+          )
+        })
+        .catch((err) => {
+            console.log(err);
+            done();
         })
       })
+    })
 
       describe("more than one vote per user for a given post", () => {
         it("should not create a vote", (done) => {

@@ -6,7 +6,6 @@ const User = require("../../src/db/models").User;
 const Vote = require("../../src/db/models").Vote;
 
 describe("Vote", () => {
-
   beforeEach((done) => {
     this.user;
     this.topic;
@@ -211,6 +210,24 @@ describe("Vote", () => {
               expect(associatedPost.title).toBe("My first visit to Proxima Centauri b");
               done();
             });
+          })
+          .catch((err) => {
+            console.log(err);
+            done();
+          })
+        })
+      })
+      
+      describe("#hasUpvoteFor()", () => {
+        it("should return true if the user has an upvote for the post", (done) => {
+          Vote.create({
+            value: 1,
+            userId: this.user.id,
+            postId: this.post.id
+          })
+          .then((vote) => {
+            expect(this.post.hasUpvoteFor(this.user.id)).toBe(true);
+            done();
           })
           .catch((err) => {
             console.log(err);
