@@ -124,8 +124,8 @@ describe("routes : users", () => {
           this.post = res.posts[0];
 
           Favorite.create({
-            postId: req.params.postId,
-            userId: req.user.id
+            postId: this.post.id,
+            userId: this.user.id
           })
           .then((res) => {
             this.favorite = res;
