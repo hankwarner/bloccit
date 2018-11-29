@@ -5,6 +5,7 @@ const User = require("../../src/db/models").User;
 const Topic = require("../../src/db/models").Topic;
 const Post = require("../../src/db/models").Post;
 const Comment = require("../../src/db/models").Comment;
+const Favorite = require("../../src/db/models").Favorite;
 
 const sequelize = require("../../src/db/models/index").sequelize;
 
@@ -95,8 +96,10 @@ describe("routes : users", () => {
   describe("GET /users/:id", () => {
     beforeEach((done) => {
       this.user;
+      this.topic;
       this.post;
       this.comment;
+      this.newPost;
       this.favorite;
 
       User.create({
@@ -121,23 +124,34 @@ describe("routes : users", () => {
           }
         })
         .then((res) => {
+          this.topic = res;
           this.post = res.posts[0];
 
-          Favorite.create({
-            postId: this.post.id,
+          Post.create({
+            title: "Lorem Ipsum",
+            body: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
+            topicId: this.topic.id,
             userId: this.user.id
           })
           .then((res) => {
-            this.favorite = res;
-
-            Comment.create({
-              body: "This comment is alright.",
-              postId: this.post.id,
+            this.newPost = res;
+          
+            Favorite.create({
+              postId: this.newPost.id,
               userId: this.user.id
             })
             .then((res) => {
-              this.comment = res;
-              done();
+              this.favorite = res;
+
+              Comment.create({
+                body: "This comment is alright.",
+                postId: this.post.id,
+                userId: this.user.id
+              })
+              .then((res) => {
+                this.comment = res;
+                done();
+              })
             })
           })
         })
@@ -148,9 +162,9 @@ describe("routes : users", () => {
       request.get(`${base}${this.user.id}`, (err, res, body) => {
         expect(body).toContain("Snowball Fighting");
         expect(body).toContain("This comment is alright.")
+        expect(body).toContain("Lorem Ipsum")
         done();
       })
     })
   })
-
 })
