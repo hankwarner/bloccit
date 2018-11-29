@@ -2,13 +2,14 @@ const sequelize = require("../../src/db/models/index").sequelize;
 const Topic = require("../../src/db/models").Topic;
 const Post = require("../../src/db/models").Post;
 const User = require("../../src/db/models").User;
+const Vote = require("../../src/db/models").Vote;
 
 describe("Post", () => {
-
   beforeEach((done) => {
     this.topic;
     this.post;
     this.user;
+    this.vote;
 
     sequelize.sync({force: true}).then((res) => {
       User.create({
@@ -21,21 +22,30 @@ describe("Post", () => {
         Topic.create({
           title: "Expeditions to Alpha Centauri",
           description: "A compilation of reports from recent visits to the star system.",
-          posts: [{
-            title: "My first visit to Proxima Centauri b",
-            body: "I saw some rocks.",
-            userId: this.user.id
-          }]
-        }, {
-          include: {
-            model: Post,
-            as: "posts"
-          }
         })
         .then((topic) => {
           this.topic = topic;
-          this.post = topic.posts[0];
-          done();
+
+          Post.create({
+            title: "Lorem Ipsum",
+            body: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit",
+            topicId: this.topic.id,
+            userId: this.user.id,
+            votes: [{
+              value: 1,
+              userId: this.user.id
+            }]
+          }, {
+            include: {
+              model: Vote,
+              as: "votes"
+            } 
+          })
+          .then((post) => {
+            this.post = post;
+            this.vote = this.post.votes[0];
+            done();
+          })
         })
       })
     })
@@ -128,6 +138,13 @@ describe("Post", () => {
         expect(associatedUser.email).toBe("starman@tesla.com");
         done();
       })
+    })
+  })
+
+  describe("#getPoints()", () => {
+    it("should return the vote total for a post", (done) => {
+      expect(this.post.getPoints()).toBe(1);
+      done();
     })
   })
 
