@@ -9,6 +9,7 @@ describe("Post", () => {
     this.topic;
     this.post;
     this.user;
+    this.vote;
 
     sequelize.sync({force: true}).then((res) => {
       User.create({
@@ -29,10 +30,20 @@ describe("Post", () => {
             title: "Lorem Ipsum",
             body: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit",
             topicId: this.topic.id,
-            userId: this.user.id
+            userId: this.user.id,
+            votes: [{
+              value: 1,
+              userId: this.user.id
+            }]
+          }, {
+            include: {
+              model: Vote,
+              as: "votes"
+            } 
           })
           .then((post) => {
             this.post = post;
+            this.vote = this.post.votes[0];
             done();
           })
         })
@@ -132,19 +143,8 @@ describe("Post", () => {
 
   describe("#getPoints()", () => {
     it("should return the vote total for a post", (done) => {
-        Vote.create({
-          value: 1,
-          userId: this.user.id,
-          postId: this.post.id
-        })
-        .then((vote) => {
-          expect(this.post.getPoints()).toBe(1);
-          done();
-        })
-      .catch((err) => {
-        console.log(err);
-        done();
-      })
+      expect(this.post.getPoints()).toBe(1);
+      done();
     })
   })
 
