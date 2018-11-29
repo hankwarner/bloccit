@@ -97,6 +97,7 @@ describe("routes : users", () => {
       this.user;
       this.post;
       this.comment;
+      this.favorite;
 
       User.create({
         email: "starman@tesla.com",
@@ -122,14 +123,22 @@ describe("routes : users", () => {
         .then((res) => {
           this.post = res.posts[0];
 
-          Comment.create({
-            body: "This comment is alright.",
-            postId: this.post.id,
-            userId: this.user.id
+          Favorite.create({
+            postId: req.params.postId,
+            userId: req.user.id
           })
           .then((res) => {
-            this.comment = res;
-            done();
+            this.favorite = res;
+
+            Comment.create({
+              body: "This comment is alright.",
+              postId: this.post.id,
+              userId: this.user.id
+            })
+            .then((res) => {
+              this.comment = res;
+              done();
+            })
           })
         })
       })
