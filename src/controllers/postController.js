@@ -48,7 +48,6 @@ module.exports = {
 
     destroy(req, res, next){
       postQueries.deletePost(req, (err, deletedRecordsCount) => {
-        console.log(err);
         if(err){
           res.redirect(500, `/topics/${req.params.topicId}/posts/${req.params.id}`)
         } else {
@@ -81,6 +80,6 @@ module.exports = {
       } else {
         res.redirect(`/topics/${req.params.topicId}/posts/${req.params.id}`);
       }
-    });
+    })
   }
 }
