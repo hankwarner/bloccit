@@ -1,6 +1,5 @@
 const Post = require("./models").Post;
 const Topic = require("./models").Topic;
-const Tag = require("./models").Tag
 const Comment = require("./models").Comment;
 const User = require("./models").User;
 const Vote = require("./models").Vote;
@@ -21,10 +20,6 @@ module.exports = {
 
     getPost(id, callback){
         return Post.findById(id, {
-          include: [{
-            model: Tag,
-            as: "tags"
-          }],
           include: [{
             model: Comment, as: "comments", include: [
               {model: User}
