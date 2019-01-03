@@ -4,7 +4,7 @@ module.exports = class PostPolicy extends ApplicationPolicy {
 
   new() {
     if (this.user.isAdmin() || this._isMember()) {
-        return true;
+      return true;
     }
   }
 
@@ -14,7 +14,7 @@ module.exports = class PostPolicy extends ApplicationPolicy {
 
   edit() {
     if (this.user.isAdmin() || this._isOwner()) {
-        return true;
+      return true;
     }
   }
 
@@ -24,7 +24,7 @@ module.exports = class PostPolicy extends ApplicationPolicy {
 
   destroy() {
     if (this.user.isAdmin() || this._isOwner()) {
-        return true;
+      return true;
     }
   }
 }

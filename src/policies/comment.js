@@ -1,8 +1,11 @@
 const ApplicationPolicy = require("./application");
 
 module.exports = class CommentPolicy extends ApplicationPolicy {
+  
   new() {
-      return this._isMember();
+    if((this.user.isAdmin() || this._isMember())) {
+      return true;
+    }
   }
   
   create() {
