@@ -7,7 +7,7 @@ let comments = [];
 for(let i = 1 ; i <= 5 ; i++){
   comments.push({
     body: faker.lorem.words(),
-    postId: 2,
+    postId: 1,
     userId: 1,
     createdAt: new Date(),
     updatedAt: new Date()
@@ -27,7 +27,7 @@ for(let i = 1 ; i <= 5 ; i++){
 for(let i = 1 ; i <= 5 ; i++){
   comments.push({
     body: faker.lorem.words(),
-    postId: 2,
+    postId: 3,
     userId: 1,
     createdAt: new Date(),
     updatedAt: new Date()
@@ -37,7 +37,57 @@ for(let i = 1 ; i <= 5 ; i++){
 for(let i = 1 ; i <= 5 ; i++){
   comments.push({
     body: faker.lorem.words(),
-    postId: 2,
+    postId: 4,
+    userId: 1,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  });
+}
+
+for(let i = 1 ; i <= 5 ; i++){
+  comments.push({
+    body: faker.lorem.words(),
+    postId: 5,
+    userId: 1,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  });
+}
+
+for(let i = 1 ; i <= 5 ; i++){
+  comments.push({
+    body: faker.lorem.words(),
+    postId: 6,
+    userId: 1,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  });
+}
+
+for(let i = 1 ; i <= 5 ; i++){
+  comments.push({
+    body: faker.lorem.words(),
+    postId: 7,
+    userId: 1,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  });
+}
+
+for(let i = 1 ; i <= 5 ; i++){
+  comments.push({
+    body: faker.lorem.words(),
+    postId: 8,
+    userId: 1,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  });
+}
+
+for(let i = 1 ; i <= 5 ; i++){
+  comments.push({
+    body: faker.lorem.words(),
+    postId: 9,
     userId: 1,
     createdAt: new Date(),
     updatedAt: new Date()
